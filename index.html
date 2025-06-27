@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Tester Pro | Java Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --accent-dark: #e5177b;
+            --dark: #1a1a2e;
+            --darker: #0f0f1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--accent), #b5179e);
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            --shadow-xl: 0 12px 32px rgba(0,0,0,0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header with animated gradient */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 80px 0 120px;
+            background: var(--gradient-primary);
+            color: white;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s infinite linear;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin: 0 auto 30px;
+            max-width: 700px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .header-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        /* Main content */
+        .main-content {
+            position: relative;
+            margin-top: -60px;
+            z-index: 10;
+        }
+        
+        /* Hero screenshot with floating effect */
+        .screenshot-container {
+            perspective: 1000px;
+            margin-bottom: 80px;
+        }
+        
+        .screenshot {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            margin: 0 auto;
+            display: block;
+            border: 1px solid rgba(255,255,255,0.2);
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 10px;
+        }
+        
+        .screenshot::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 12px;
+            background: var(--gradient-primary);
+            opacity: 0.05;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(-2deg); }
+            50% { transform: translateY(-20px) rotateX(7deg) rotateY(2deg); }
+        }
+        
+        /* Features grid with hover effects */
+        .features-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            color: white;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card:hover .feature-icon {
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .feature-card:hover h3 {
+            color: white;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+        
+        /* Download section with gradient */
+        .download-section {
+            text-align: center;
+            padding: 80px 40px;
+            border-radius: 16px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.05) 0%, 
+                rgba(255,255,255,0) 50%, 
+                rgba(255,255,255,0.05) 100%);
+            z-index: 1;
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .download-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .download-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .download-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* Requirements section */
+        .requirements {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 16px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .requirements::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h30v30H0V0zm30 30h30v30H30V30z' fill='%234361ee' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+        
+        .requirements-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .requirements h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+        }
+        
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .requirement-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .requirement-icon {
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-top: 3px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(67, 97, 238, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 20px;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Stats counter */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 80px 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            color: white;
+            padding: 60px 0 30px;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient-accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            gap: 10px;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.2) 50%, transparent 75%);
+            background-size: 400% 400%;
+            z-index: -1;
+            transition: background-position 0.6s ease;
+            opacity: 0;
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
+            animation: shine 1.5s infinite;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-accent {
+            background: var(--gradient-accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(248, 37, 133, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(248, 37, 133, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+        
+        .btn-lg {
+            padding: 18px 40px;
+            font-size: 1.2rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .header-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            header {
+                padding: 60px 0 100px;
+            }
+            
+            .feature-card {
+                padding: 25px;
+            }
+            
+            .download-section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1>Typing Speed Tester Pro</h1>
+            <p class="tagline">The ultimate Java application to measure, analyze, and dramatically improve your typing speed with advanced analytics and gamified challenges</p>
+            <div class="header-buttons">
+                <a href="#download" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Now
+                </a>
+                <a href="#features" class="btn btn-outline">
+                    <i class="fas fa-star"></i> Explore Features
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container main-content">
+        <div class="screenshot-container">
+            <img src="https://via.placeholder.com/900x550/2c3e50/ecf0f1?text=Typing+Speed+Tester+Pro+UI" alt="Typing Speed Tester Pro Screenshot" class="screenshot">
+        </div>
+        
+        <section class="features-section" id="features">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Watch your WPM, accuracy, and error rate update live as you type with our advanced performance dashboard.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Gamified Learning</h3>
+                    <p>Unlock achievements, complete daily challenges, and climb leaderboards to stay motivated in your typing journey.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>Comprehensive statistics and beautiful graphs show your improvement over days, weeks, and months.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Customizable Experience</h3>
+                    <p>Choose from multiple themes, font styles, and layouts to create your perfect typing environment.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Multi-Difficulty System</h3>
+                    <p>From simple words to complex programming code - test your skills at any level with our adaptive content.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Competitive Mode</h3>
+                    <p>Race against the clock or challenge friends in timed typing duels with our multiplayer-ready system.</p>
+                </div>
+            </div>
+        </section>
+        
+
+        
+        <section class="download-section" id="download">
+            <div class="download-content">
+                <h2>Ready to Transform Your Typing?</h2>
+                <p>Join thousands of users who have improved their typing speed and accuracy with our scientifically designed exercises and real-time feedback system.</p>
+                <div class="download-buttons">
+                    <a href="#" class="btn btn-accent btn-lg" id="download-jar">
+                        <i class="fas fa-download"></i> Download for Windows
+                    </a>
+
+                    <a href="#" class="btn btn-outline" id="download-source">
+                        <i class="fas fa-code"></i> Source Code
+                    </a>
+                </div>
+                <p style="margin-top: 30px; opacity: 0.8; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Requires Java 8 or higher | Version 2.1.3 | 15.7 MB
+                </p>
+            </div>
+        </section>
+        
+        <section class="requirements">
+            <div class="requirements-content">
+                <h2>System Requirements</h2>
+                <div class="requirements-grid">
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div>
+                            <h3>Processor</h3>
+                            <p>1.5 GHz dual-core or better</p>
+                        </div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-memory"></i>
+                        </div>
+                        <div>
+                            <h3>Memory</h3>
+                            <p>2GB RAM minimum (4GB recommended)</p>
+                        </div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div>
+                            <h3>Display</h3>
+                            <p>1024×768 resolution or higher</p>
+                        </div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-icon">
+                            <i class="fab fa-java"></i>
+                        </div>
+                        <div>
+                            <h3>Java</h3>
+                            <p>JRE 8 or newer required</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="download-section" style="background: var(--gradient-accent);">
+            <div class="download-content">
+                <h2>Start Typing Faster Today</h2>
+                <p>Download Typing Speed Tester Pro completely free and begin your journey to typing mastery in minutes.</p>
+                <div class="download-buttons">
+                    <a href="#" class="btn btn-primary btn-lg" id="download-main">
+                        <i class="fas fa-rocket"></i> Get Started Now
+                    </a>
+                </div>
+                <p style="margin-top: 30px; opacity: 0.8; font-size: 0.9rem;">
+                    <i class="fas fa-lock"></i> 100% Safe Download | No Ads | Open Source
+                </p>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Typing Speed Tester Pro</h3>
+                    <p>The most advanced Java-based typing analysis tool, helping users improve their typing speed and accuracy since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Features</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Real-time Analytics</a></li>
+                        <li><a href="#">Gamification</a></li>
+                        <li><a href="#">Progress Tracking</a></li>
+                        <li><a href="#">Customization</a></li>
+                        <li><a href="#">Multiplayer</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">GitHub Repository</a></li>
+                        <li><a href="#">Support Forum</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contributors</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Typing Speed Tester Pro. All rights reserved.</p>
+                <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;">
+                    Built with Java Swing | Open Source | Version 2.1.3
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animated counter for stats
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                obj.innerHTML = value.toLocaleString() + (id === 'wpm-improvement' ? '%' : '+');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        // Intersection Observer to trigger animations when elements come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'users-count') {
+                        animateValue('users-count', 0, 10000, 2000);
+                        animateValue('wpm-improvement', 0, 74, 2000);
+                        animateValue('tests-taken', 0, 500000, 2000);
+                    }
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.stat-number, .feature-card, .testimonial-card').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Download button handlers
+        document.querySelectorAll('#download-jar, #download-mac, #download-main').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // In a real implementation, this would trigger the download
+                alert('Download would start here. This would link to your actual JAR file.');
+            });
+        });
+        
+        document.getElementById('download-source').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('This would link to your GitHub repository or source code ZIP download.');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
